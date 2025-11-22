@@ -119,41 +119,6 @@ Preferred communication style: Simple, everyday language.
 - Manual file locking needed for race conditions
 - Scalability limitations
 
-### Bot Control & System Files
-
-**Problem**: Need centralized control over bot behavior and provide reusable action functions.
-
-**Solution**: Three-tier system file architecture:
-
-1. **botControl.json** - Master control configuration
-   - Owner and admin/operator lists
-   - Bot lock status
-   - Nickname/profile change protection flags
-   - Centralized authorization source
-
-2. **botActions.js** - Bot modification functions
-   - `changeBotNickname(api, threadID, newName)` - Rename bot in groups
-   - `changeBotAvatar(api, imageURL)` - Update bot profile picture
-   - `changeBotBio(api, text)` - Change bot's bio/about text
-   - `changeGroupNickname(api, threadID, targetUID, nickname)` - Rename group members
-   - `changeGroupEmoji(api, threadID, emoji)` - Set group reaction emoji
-   - `changeGroupName(api, threadID, name)` - Rename groups
-   - All wrapped with try-catch error handling and logging
-
-3. **autoReport.js** - Automated reporting system
-   - `reportProfile(profileID, reasonCode)` - Report user profiles
-   - `reportPost(postID, reasonCode)` - Report posts
-   - `reportComment(commentID, reasonCode)` - Report comments
-   - Preset report reason mappings (SPAM, HARASSMENT, etc.)
-   - Standardized response format with report IDs and status tracking
-
-**Pros**:
-- Centralized control and management
-- Reusable across all commands
-- Type-safe with error handling
-- Logging for audit trails
-- Easy to extend with new functions
-
 ### Utility Architecture
 
 **Problem**: Need reusable helper functions across commands and core bot.
@@ -167,25 +132,6 @@ Preferred communication style: Simple, everyday language.
 - DRY (Don't Repeat Yourself) principle
 - Consistent formatting across bot
 - Centralized config management
-
-## Command System Update
-
-**Latest Expansion (November 2025):**
-- Total commands: **332+ fully implemented commands**
-- Coverage: Complete A-Z command set
-- Categories: Admin tools, social features, games, utilities, media, info tools, settings, and entertainment
-- All commands follow standardized module pattern with role-based permissions
-- Integration ready with botActions.js and autoReport.js system files
-
-**Key Command Categories:**
-- Moderation: ban, unban, kick, warning, spamban
-- Group Management: groupadmin, groupname, groupemoji, setname, setprefix
-- Admin Tools: load, reload, restart, shell, system, config
-- Social & Fun: marry, hug, kiss, slap, punch, wasted, rip
-- Utilities: search, translate, password, random, math, calculate
-- Media: video, music, youtube, pinterest, removebg, screenshot
-- Info: wiki, weather, info, status, about, owner
-- Games: tictactoe, quiz, slot, fish, petmonsters
 
 ## External Dependencies
 
