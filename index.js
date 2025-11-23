@@ -65,7 +65,8 @@ login({ appState }, (err, api) => {
         logLevel: 'silent',
         updatePresence: true,
         selfListen: false,
-        forceLogin: true
+        forceLogin: true,
+        mqttDisabled: true
     });
 
     const commands = loadCommands();
