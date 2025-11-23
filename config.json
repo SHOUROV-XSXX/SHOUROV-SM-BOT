@@ -12,18 +12,15 @@
   "botName": "[ / ] • 𝐒𝐇𝐎𝐔𝐑𝐎𝐕_𖣘 -𝐁𝐎𝐓🤖",
   "prefix": "/",
   "react": "☠️",
-  "operators": [
-    "100071971474157",
-    "100071971474157"
-  ],
-  "admins": [
-    "100071971474157",
-    "100071971474157"
-  ],
+
   "ownerId": "100071971474157",
+  "admins": ["100071971474157"],
+  "operators": ["100071971474157"],
+
   "APPROVED": [],
   "disabledcmds": [],
   "disabledevents": [],
+
   "note": "make sure that the bot name you entered is all lowercase",
   "notice": "dont cng author name and owner uid. otherwise bot not working",
   "notice2": "if you run use email and password, use saveState false; otherwise, use saveState true"
