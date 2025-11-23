@@ -1,5 +1,5 @@
 const fs = require('fs');
-const login = require('facebook-chat-api');
+const login = require('zef-fb-chat-api);
 const express = require('express');
 
 const config = JSON.parse(fs.readFileSync('./config.json', 'utf8'));
