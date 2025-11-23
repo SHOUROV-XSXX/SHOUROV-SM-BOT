@@ -1,0 +1,9 @@
+{
+  "botName": "SHOUROV-BOT",
+  "prefix": "/",
+  "author": "ALIHSAN SHOUROV",
+  "ownerId": "100071971474157",
+  "admins": ["100071971474157"],
+  "operators": ["100071971474157"],
+  "port": 3000
+}
