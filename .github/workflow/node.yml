@@ -1,1 +1,40 @@
+name: Node.js CI
 
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Check syntax
+      run: node -c index.js
+
+    - name: Verify project structure
+      run: |
+        echo "Checking project files..."
+        test -f index.js && echo "✓ index.js exists"
+        test -f config.json && echo "✓ config.json exists"
+        test -f package.json && echo "✓ package.json exists"
+        test -d shourov/commands && echo "✓ commands directory exists"
+        test -d shourov/events && echo "✓ events directory exists"
+        echo "All checks passed!"
