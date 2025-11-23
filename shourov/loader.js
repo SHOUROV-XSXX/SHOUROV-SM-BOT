@@ -13,11 +13,11 @@ function loadCommands() {
                 const command = require(path.join(commandsPath, file));
                 if (command.config && command.config.name) {
                     commands.set(command.config.name.toLowerCase(), command);
-                    
+
                     if (command.config.aliases && Array.isArray(command.config.aliases)) {
-                        for (const alias of command.config.aliases) {
+                        command.config.aliases.forEach(alias => {
                             commands.set(alias.toLowerCase(), command);
-                        }
+                        });
                     }
                 }
             } catch (error) {
@@ -25,10 +25,13 @@ function loadCommands() {
             }
         }
 
-        console.log(`Loaded commands: ${Array.from(commands.keys()).filter((key, index, self) => {
-            const cmd = commands.get(key);
-            return self.indexOf(key) === self.findIndex(k => commands.get(k) === cmd);
-        }).join(', ')}`);
+        console.log(
+            `Loaded commands: ${Array.from(commands.keys()).filter((key, index, self) => {
+                const cmd = commands.get(key);
+                return self.indexOf(key) === self.findIndex(k => commands.get(k) === cmd);
+            }).join(', ')}`
+        );
+
     } catch (error) {
         console.error('Error loading commands:', error);
     }
@@ -41,9 +44,7 @@ function loadEvents() {
     const eventsPath = path.join(__dirname, 'events');
 
     try {
-        const files = fs.readdirSync(eventsPath).filter(file => 
-            file.endsWith('.js') && file !== 'message.js'
-        );
+        const files = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
 
         for (const file of files) {
             try {
@@ -58,6 +59,7 @@ function loadEvents() {
         }
 
         console.log(`Loaded events: ${events.map(e => e.name).join(', ')}`);
+
     } catch (error) {
         console.error('Error loading events:', error);
     }
