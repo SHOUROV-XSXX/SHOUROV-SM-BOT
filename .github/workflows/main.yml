@@ -2,9 +2,9 @@ name: shourov-Bot
 
 on:
   push:
-    branches: [ workflow_dispatch ]
+    branches: [ main ]
   pull_request:
-    branches: [ workflow_dispatch ]
+    branches: [ main ]
 
 jobs:
   build:
