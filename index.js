@@ -52,7 +52,7 @@ login({ appState }, (err, api) => {
         selfListen: false,
         updatePresence: true,
         forceLogin: true,
-        mqttDisabled: true
+        mqttDisabled: false
         // ❗ mqttDisabled is no longer needed
     });
 
