@@ -1,14 +1,11 @@
 name: shourov-Bot
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  run:
+    runs-on: self-hosted
 
     steps:
       - name: Checkout code
@@ -17,10 +14,10 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: 16
 
       - name: Install dependencies
         run: npm install
 
-      - name: shourov-Bot
-        run: npm start
+      - name: Start shourov Bot
+        run: node index.js
