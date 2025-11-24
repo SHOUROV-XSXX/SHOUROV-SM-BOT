@@ -1,40 +1,33 @@
-name: Node.js CI
+name: Run Bot (6 hours)
 
 on:
-  push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
+  workflow_dispatch:
 
 jobs:
-  build:
+  run-bot:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x]
+    timeout-minutes: 360
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Setup Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
+      - name: Check for fbstate.json in repo or restore from secret
+        run: |
+          if [ -f "./fbstate.json" ]; then
+            echo "fbstate.json found in repository. Using that."
+            ls -la fbstate.json
+          elif [ "${{ secrets.FB_APPSTATE }}" != "" ]; then
+            echo "fbstate.json not found in repo; creating from FB_APPSTATE secret..."
+            printf '%s' "${{ secrets.FB_APPSTATE }}" > fbstate.json
+            echo "fbstate.json created from secret, size: $(wc -c < fbstate.json) bytes"
+          else
+            echo "No fbstate.json in repo and no FB_APPSTATE secret set. Exiting."
+            exit 1
+          fi
 
-    - name: Install dependencies
-      run: npm install
+      - name: Install dependencies
+        run: npm ci || npm install
 
-    - name: Check syntax
-      run: node -c index.js
-
-    - name: Verify project structure
-      run: |
-        echo "Checking project files..."
-        test -f index.js && echo "✓ index.js exists"
-        test -f config.json && echo "✓ config.json exists"
-        test -f package.json && echo "✓ package.json exists"
-        test -d shourov/commands && echo "✓ commands directory exists"
-        test -d shourov/events && echo "✓ events directory exists"
-        echo "All checks passed!"
+      - name: Run bot
+        run: npm start
